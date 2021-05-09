@@ -1,10 +1,12 @@
 import { InjectionKey } from "vue";
 import { createStore, useStore as baseUseStore, Store } from "vuex";
-// import { auth } from "./modules/auth";
 
 export interface TodoItem {
-  name: string;
-  author: string;
+  title: string;
+  content: string;
+  priority: number;
+  charge: string;
+  status: number;
 }
 
 export interface User {

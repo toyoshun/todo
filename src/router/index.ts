@@ -15,6 +15,12 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import("../views/UserAuth.vue"),
     meta: { requiresAuth: false },
   },
+  {
+    path: "/todo",
+    name: "Todo",
+    component: () => import("../views/Todo.vue"),
+    meta: { requiresAuth: false },
+  },
 ];
 
 const router = createRouter({
