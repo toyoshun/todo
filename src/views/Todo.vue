@@ -2,27 +2,27 @@
   <div>
     <div>
       <span>title: </span>
-      <input type="text" v-model="todoItem.title" />
+      <input type="text" v-model="state.title" />
     </div>
     <br />
     <div>
       <span>content: </span>
-      <input type="text" v-model="todoItem.content" />
+      <input type="text" v-model="state.content" />
     </div>
     <br />
     <div>
       <span>priority: </span>
-      <input type="text" v-model="todoItem.priority" />
+      <input type="text" v-model="state.priority" />
     </div>
     <br />
     <div>
       <span>charge: </span>
-      <input type="text" v-model="todoItem.charge" />
+      <input type="text" v-model="state.charge" />
     </div>
     <br />
     <div>
       <span>status: </span>
-      <input type="text" v-model="todoItem.status" />
+      <input type="text" v-model="state.status" />
     </div>
     <br />
     <button @click="addTodo">Add</button>
@@ -41,7 +41,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(item, index) in todoList" :key="index">
+        <tr v-for="(item, index) in state.todoList" :key="index">
           <td>{{ item.title }}</td>
           <td>{{ item.content }}</td>
           <td>{{ item.priority }}</td>
@@ -54,9 +54,9 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive } from "vue";
-import { TodoItem, useStore } from "@/store";
-import { useTodo } from "@/scripts/todo";
+import { defineComponent } from "vue";
+// import { TodoItem, useStore } from "@/store";
+import { useTodoStore } from "@/scripts/todo";
 
 export default defineComponent({
   name: "Todo",
@@ -65,42 +65,10 @@ export default defineComponent({
     // // Storeを取得する
     // const store = useStore();
 
-    // const { todoItem, todoList, addTodo } = useTodo();
-
-    let todoItem: TodoItem = reactive({
-      title: "",
-      content: "",
-      priority: 0,
-      charge: "",
-      status: 0,
-    });
-
-    const todoList: TodoItem[] = reactive([]);
-
-    // アイテム初期化する必要あり
-    const addTodo = () => {
-      todoList.push(todoItem);
-
-      // プッシュしたのと同期してしまう
-      // todoItem.title = "";
-      // todoItem.content = "";
-      // todoItem.priority = 0;
-      // todoItem.charge = "";
-      // todoItem.status = 0;
-
-      // 同期はしないが入力欄がそのまま
-      // todoItem = reactive({
-      //   title: "",
-      //   content: "",
-      //   priority: 0,
-      //   charge: "",
-      //   status: 0,
-      // });
-    };
+    const { state, addTodo } = useTodoStore();
 
     return {
-      todoItem,
-      todoList,
+      state,
       addTodo,
     };
   },

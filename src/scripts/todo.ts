@@ -1,12 +1,13 @@
 import { useStore, TodoItem } from "@/store";
-import { reactive } from "vue";
+import { InjectionKey, reactive } from "vue";
 // import { auth as firebaseAuth, authObject } from "@/scripts/firebase";
 
-const todo = () => {
+const todoStore = () => {
   // Storeを取得する
   const store = useStore();
 
-  const todoItem: TodoItem = reactive({
+  const state = reactive({
+    todoList: [{}] as TodoItem[],
     title: "",
     content: "",
     priority: 0,
@@ -14,24 +15,34 @@ const todo = () => {
     status: 0,
   });
 
-  const todoList: TodoItem[] = reactive([]);
+  const addTodo = () => {
+    const todoItem: TodoItem = {
+      title: state.title,
+      content: state.content,
+      priority: state.priority,
+      charge: state.charge,
+      status: state.status,
+    };
+    state.todoList.push(todoItem);
 
-  const addTodo = (item: TodoItem) => {
-    todoList.push(item);
     initializeItem();
   };
 
   const initializeItem = () => {
-    todoItem.title = "";
-    todoItem.content = "";
-    todoItem.priority = 0;
-    todoItem.charge = "";
-    todoItem.status = 0;
+    state.title = "";
+    state.content = "";
+    state.priority = 0;
+    state.charge = "";
+    state.status = 0;
   };
 
-  return { todoItem, todoList, addTodo };
+  return { state, addTodo };
 };
 
-export function useTodo(): ReturnType<typeof todo> {
-  return todo();
+// export type TodoStore =ReturnType<typeof todoStore>;
+
+// export const todoStoreKey:InjectionKey<TodoStore> =Symbol('authStore')
+
+export function useTodoStore(): ReturnType<typeof todoStore> {
+  return todoStore();
 }
